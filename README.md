@@ -1,6 +1,7 @@
 PiP used in This Project
+
 {
-asgiref==3.6.0
+    asgiref==3.6.0
 
     Django==4.1.6
 

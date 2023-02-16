@@ -85,7 +85,6 @@ DATABASES = {
     "default": {
         "ENGINE": "mssql",
         "NAME": "Product",
-
         "HOST": "IP PC",
         "USER": "USERNAME",
         "PASSWORD": "PASSWORD",

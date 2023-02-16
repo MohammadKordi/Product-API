@@ -41,9 +41,10 @@ class RoleView(APIView):
                 Roles_Serializers.role_name = request.data['roleName']
                 role.role_name = Roles_Serializers.role_name
                 role.save()
-                return Response(f'Update')
+                message = result_message("Update", status.HTTP_200_OK, 'Update')
+                return Response(message, status=status.HTTP_200_OK)
             except Exception as ex:
-                message = result_message("NOT FOUND", status.HTTP_404_NOT_FOUND, 'Not Updated')
+                message = result_message("Not Found", status.HTTP_404_NOT_FOUND, 'Not Updated')
                 return Response(message, status=status.HTTP_400_BAD_REQUEST)
         else:
             message = result_message("The Name Already Exists", status.HTTP_400_BAD_REQUEST, 'Not Updated')
@@ -53,6 +54,8 @@ class RoleView(APIView):
         try:
             role = Roles.objects.get(id=pk)
             role.delete()
-            return Response(f'Delete')
+            message = result_message("Delete", status.HTTP_204_NO_CONTENT, 'Delete')
+            return Response(message, status=status.HTTP_204_NO_CONTENT)
         except Exception as ex:
-            return Response(f'Bad Request', status=status.HTTP_400_BAD_REQUEST)
+            message = result_message("Not Found", status.HTTP_404_NOT_FOUND, 'Not Found')
+            return Response(message, status=status.HTTP_404_NOT_FOUND)

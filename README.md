@@ -18,4 +18,6 @@ PIP used in This Project
 
     tzdata==2022.7
 
+    django-regex==0.5.0
+
 }

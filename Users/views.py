@@ -1,7 +1,4 @@
 import re
-
-from rest_framework.permissions import IsAuthenticated
-
 import Roles.models
 from Users.models import Users
 from rest_framework import status
@@ -10,7 +7,6 @@ from rest_framework.views import APIView
 from result_message import result_message
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
-from django_regex.validators import RegexValidator
 from rest_framework.authtoken.models import Token
 
 
@@ -133,9 +129,23 @@ class UserView(APIView):
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        user = Users.objects.get(id=pk)
-        user.delete()
-        return Response(f'Delete')
+        try:
+            user = Users.objects.get(id=pk)
+            user.delete()
+            message = result_message(
+                "Delete",
+                status.HTTP_204_NO_CONTENT,
+                "The Deletion was Successful"
+            )
+            return Response(message)
+
+        except Exception as ex:
+            message = result_message(
+                "Failed",
+                status.HTTP_400_BAD_REQUEST,
+                "The Delete operation was not Successful"
+            )
+            return Response(message)
 
 
 class Login(APIView):

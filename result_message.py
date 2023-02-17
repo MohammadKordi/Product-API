@@ -4,4 +4,5 @@ def result_message(message, status_code, result):
         'status_code': status_code,
         'result': result
     }
+    
     return message

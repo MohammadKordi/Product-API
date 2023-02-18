@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'Users',
-    'Roles'
+    'Roles',
+    'Access_Page',
+    'AccessPage_Role',
 ]
 
 MIDDLEWARE = [

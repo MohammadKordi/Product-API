@@ -12,7 +12,6 @@ from rest_framework.authtoken.models import Token
 
 class UserView(APIView):
     users = Users.objects.all()
-
     # permission_classes = [IsAuthenticated]
 
     def get(self, request, pk=None):

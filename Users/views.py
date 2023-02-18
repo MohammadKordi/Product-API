@@ -2,6 +2,7 @@ import re
 import Roles.models
 from Users.models import Users
 from rest_framework import status
+from Permissions import PermissionRole
 from .Serializer import UserSerializer
 from rest_framework.views import APIView
 from result_message import result_message
@@ -12,7 +13,7 @@ from rest_framework.authtoken.models import Token
 
 class UserView(APIView):
     users = Users.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [PermissionRole]
 
     def get(self, request, pk=None):
         if pk is None:

@@ -1,5 +1,7 @@
 from rest_framework import status
 from rest_framework.views import APIView
+
+from Permissions import PermissionRole
 from result_message import result_message
 from Access_Page.models import AccessPage
 from rest_framework.response import Response
@@ -7,6 +9,7 @@ from Access_Page.Serializer import Serializer
 
 
 class AccessPageView(APIView):
+    permission_classes = [PermissionRole]
 
     def get(self, request, pk=None):
         if pk is None:

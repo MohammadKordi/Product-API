@@ -1,3 +1,4 @@
+from Permissions import PermissionRole
 from .models import Roles
 from rest_framework import status
 from rest_framework.views import APIView
@@ -7,6 +8,7 @@ from rest_framework.response import Response
 
 
 class RoleView(APIView):
+    permission_classes = [PermissionRole]
     roles = Roles.objects.all()
 
     def get(self, request, pk=None):

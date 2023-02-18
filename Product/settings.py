@@ -85,10 +85,10 @@ DATABASES = {
     "default": {
         "ENGINE": "mssql",
         "NAME": "Product",
-
-        "HOST": "IP PC",
-        "USER": "USERNAME",
-        "PASSWORD": "PASSWORD",
+        
+        # "HOST": "IP PC",
+        # "USER": "USERNAME",
+        # "PASSWORD": "PASSWORD",
         "PORT": "1433",
         "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server"}
     },

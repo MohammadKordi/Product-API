@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 
 class RoleView(APIView):
-    permission_classes = [PermissionRole]
+    # permission_classes = [PermissionRole]
     roles = Roles.objects.all()
 
     def get(self, request, pk=None):

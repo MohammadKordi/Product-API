@@ -13,11 +13,36 @@ from rest_framework.authtoken.models import Token
 
 class UserView(APIView):
     users = Users.objects.all()
-    permission_classes = [PermissionRole]
+
+    # permission_classes = [PermissionRole]
 
     def get(self, request, pk=None):
         if pk is None:
-            message = result_message("OK", status.HTTP_200_OK, self.users.values())
+            userList = []
+            for user in self.users:
+                if user.is_deleted == False:
+                    if user.role:
+                        userObject = {
+                            'id': user.id,
+                            'first_name': user.first_name,
+                            'last_name': user.last_name,
+                            'mobile': user.mobile,
+                            'email': user.email,
+                            'username': user.username,
+                            'role': user.role.role_name
+                        }
+                    else:
+                        userObject = {
+                            'id': user.id,
+                            'first_name': user.first_name,
+                            'last_name': user.last_name,
+                            'mobile': user.mobile,
+                            'email': user.email,
+                            'username': user.username,
+                            'role': null
+                        }
+                    userList.extend([userObject])
+            message = result_message("OK", status.HTTP_200_OK, userList)
             return Response(message, status=status.HTTP_200_OK)
         else:
             try:
@@ -131,7 +156,8 @@ class UserView(APIView):
     def delete(self, request, pk):
         try:
             user = Users.objects.get(id=pk)
-            user.delete()
+            user.is_deleted = true
+            user.save()
             message = result_message(
                 "Delete",
                 status.HTTP_204_NO_CONTENT,
@@ -183,3 +209,26 @@ class Login(APIView):
                 ""
             )
             return Response(message_bad_request, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class ChangeRoleUser(APIView):
+    def post(self, request, pk):
+        try:
+            user = Users.objects.get(id=pk)
+            role = Roles.models.Roles.objects.get(id=request.data['roleId'])
+            print(role.id)
+            user.role_id = role.id
+            user.save()
+            message = result_message(
+                "Change Role",
+                status.HTTP_200_OK,
+                {"role ": user.role.role_name, 'user': user.username}
+            )
+            return Response(message, status=status.HTTP_200_OK)
+        except Exception as e:
+            message_bad_request = result_message(
+                "Not Found User or Role",
+                status.HTTP_400_BAD_REQUEST,
+                request.data['roleId']
+            )
+            return Response(message_bad_request, status=status.HTTP_400_BAD_REQUEST)

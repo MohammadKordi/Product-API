@@ -1,6 +1,6 @@
 from django_regex.validators import RegexValidator
 from rest_framework import serializers
-
+from .models import Users
 
 class UserSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=250, allow_null=False)

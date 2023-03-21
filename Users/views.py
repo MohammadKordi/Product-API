@@ -29,7 +29,8 @@ class UserView(APIView):
                             'mobile': user.mobile,
                             'email': user.email,
                             'username': user.username,
-                            'role': user.role.role_name
+                            'role': user.role.role_name,
+                            'registered': user.date_joined,
                         }
                     else:
                         userObject = {
@@ -39,7 +40,8 @@ class UserView(APIView):
                             'mobile': user.mobile,
                             'email': user.email,
                             'username': user.username,
-                            'role': null
+                            'role': null,
+                            'registered': user.date_joined,
                         }
                     userList.extend([userObject])
             message = result_message("OK", status.HTTP_200_OK, userList)

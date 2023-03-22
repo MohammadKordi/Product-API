@@ -4,6 +4,7 @@ from Users.models import Users
 from rest_framework import status
 from Permissions import PermissionRole
 from .Serializer import UserSerializer
+from rest_framework import permissions
 from rest_framework.views import APIView
 from result_message import result_message
 from django.contrib.auth import authenticate
@@ -218,7 +219,7 @@ class ChangeRoleUser(APIView):
         try:
             user = Users.objects.get(id=pk)
             role = Roles.models.Roles.objects.get(id=request.data['roleId'])
-            print(role.id)
+            user.is_staff = 1
             user.role_id = role.id
             user.save()
             message = result_message(
@@ -234,3 +235,15 @@ class ChangeRoleUser(APIView):
                 request.data['roleId']
             )
             return Response(message_bad_request, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Auth(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        message = result_message(
+            "Auth",
+            status.HTTP_200_OK,
+            "OK"
+        )
+        return Response(message, status=status.HTTP_200_OK)
